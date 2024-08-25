@@ -1,33 +1,32 @@
-package com.whut.apiplatform.model.entity;
+package com.whut.apiplatform.model.vo;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
-import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.util.Date;
 
 /**
  * @author whut2024
- * @since 2024-08-24
+ * @since 2024-08-25
  */
-
 @Data
-@TableName("user")
-public class InterfaceInfo {
+public class InterfaceInfoVo {
 
 
-    @TableId
     private Long id;
+
+
+    private Long userId;
 
 
     private String url;
 
 
-    private String description;
-
-
     private String method;
+
+
+    private String description;
 
 
     private String requestParam;
@@ -46,8 +45,4 @@ public class InterfaceInfo {
 
 
     private Date updateTime;
-
-
-    @TableLogic
-    private String isDelete;
 }

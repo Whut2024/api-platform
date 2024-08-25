@@ -20,6 +20,9 @@ public class UserInterfaceInfo {
     private Long id;
 
 
+    private Long interfaceInfoId;
+
+
     private Long userId;
 
 
