@@ -1,7 +1,6 @@
 package com.whut.apiplatform.model.vo;
 
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
+
 import lombok.Data;
 
 import java.util.Date;
@@ -20,6 +19,9 @@ public class InterfaceInfoVo {
     private Long userId;
 
 
+    private String name;
+
+
     private String url;
 
 
@@ -32,7 +34,7 @@ public class InterfaceInfoVo {
     private String requestParam;
 
 
-    private String requestBody;
+    private String responseHeader;
 
 
     private String requestHeader;
@@ -41,8 +43,14 @@ public class InterfaceInfoVo {
     private String status;
 
 
+    private Integer totalNum;
+
+
     private Date createTime;
 
 
     private Date updateTime;
+
+
+    private String isDelete;
 }

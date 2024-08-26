@@ -2,6 +2,9 @@ package com.whut.apiplatform.core.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.whut.apiplatform.model.entity.InterfaceInfo;
+import com.whut.apiplatform.model.vo.InterfaceInfoVo;
+
+import java.util.List;
 
 /**
 * @author laowang
@@ -11,6 +14,10 @@ import com.whut.apiplatform.model.entity.InterfaceInfo;
 */
 public interface InterfaceInfoMapper extends BaseMapper<InterfaceInfo> {
 
+    /**
+     * it is designed for selecting the largest top 3 invoked times for interfaces
+     */
+    List<InterfaceInfoVo> getInterfaceInfoVo();
 }
 
 
