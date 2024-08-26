@@ -1,0 +1,33 @@
+server:
+  port: 7529
+  servlet:
+    context-path: /api
+
+
+spring:
+  mvc:
+    servlet:
+      load-on-startup: 1
+
+
+  redis:
+    host: 123.60.168.252
+    port: 6300
+    password: whut
+
+  # 数据库配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://123.60.168.252:3300/api_platform
+    username: root
+    password: whut
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      logic-delete-field: isDelete # 全局逻辑删除的实体字段名
+      logic-delete-value: 1 # 逻辑已删除值（默认为 1）
+      logic-not-delete-value: 0 # 逻辑未删除值（默认为 0）
