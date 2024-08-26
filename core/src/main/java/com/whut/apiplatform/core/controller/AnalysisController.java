@@ -1,4 +1,4 @@
-package com.whut.apipaltform.core.controller;
+package com.whut.apiplatform.core.controller;
 
 import com.whut.apiplatform.model.vo.InterfaceInfoVo;
 import com.whut.webs.response.BaseResponse;
