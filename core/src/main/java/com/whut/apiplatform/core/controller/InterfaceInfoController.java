@@ -2,12 +2,18 @@ package com.whut.apiplatform.core.controller;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.whut.apiplatform.core.utils.UserHolder;
 import com.whut.apiplatform.model.dto.interfaceinfo.InterfaceInfoPageRequest;
+import com.whut.apiplatform.model.dto.interfaceinfo.InterfaceInfoUpdateRequest;
 import com.whut.apiplatform.model.dto.userinterfaceinfo.UserInterfaceInfoUpdateRequest;
 import com.whut.apiplatform.model.entity.User;
+import com.whut.apiplatform.model.entity.UserInterfaceInfo;
+import com.whut.apiplatform.model.enums.UserRoleEnum;
 import com.whut.apiplatform.service.InterfaceInfoService;
+import com.whut.apiplatform.service.UserInterfaceInfoService;
 import com.whut.common.DeleteRequest;
 import com.whut.apiplatform.model.dto.interfaceinfo.InterfaceInfoAddRequest;
 import com.whut.apiplatform.model.dto.interfaceinfo.InterfaceInfoInvokeRequest;
@@ -35,18 +41,18 @@ public class InterfaceInfoController {
 
     @PostMapping("/add")
     public BaseResponse<Long> addInterfaceInfo(@RequestBody InterfaceInfoAddRequest interfaceInfoAddRequest) {
-        String url = interfaceInfoAddRequest.getUrl();
-        String description = interfaceInfoAddRequest.getDescription();
-        String method = interfaceInfoAddRequest.getMethod();
-        String requestParam = interfaceInfoAddRequest.getRequestParam();
-        String responseHeader = interfaceInfoAddRequest.getResponseHeader();
-        String requestHeader = interfaceInfoAddRequest.getRequestHeader();
+        final String url = interfaceInfoAddRequest.getUrl();
+        final String description = interfaceInfoAddRequest.getDescription();
+        final String method = interfaceInfoAddRequest.getMethod();
+        final String requestParam = interfaceInfoAddRequest.getRequestParam();
+        final String responseHeader = interfaceInfoAddRequest.getResponseHeader();
+        final String requestHeader = interfaceInfoAddRequest.getRequestHeader();
 
         ThrowUtils.throwIf(!StrUtil.isAllNotBlank(url, description, method, responseHeader, requestParam, requestHeader), ErrorCode.PARAMS_ERROR);
 
-        User user = UserHolder.get();
+        final User user = UserHolder.get();
 
-        InterfaceInfo interfaceInfo = BeanUtil.copyProperties(interfaceInfoAddRequest, InterfaceInfo.class);
+        final InterfaceInfo interfaceInfo = BeanUtil.copyProperties(interfaceInfoAddRequest, InterfaceInfo.class);
 
         interfaceInfoService.saveInterfaceInfo(interfaceInfo, user);
 
@@ -55,18 +61,25 @@ public class InterfaceInfoController {
 
 
     @PostMapping("/delete")
-    public BaseResponse<Boolean> deleteInterfaceInfo(DeleteRequest deleteRequest) {
+    public BaseResponse<Boolean> deleteInterfaceInfo(@RequestBody DeleteRequest deleteRequest) {
+        final Long id = deleteRequest.getId();
 
+        ThrowUtils.throwIf(id == null || id <= 0, ErrorCode.PARAMS_ERROR);
 
-        return null;
+        Boolean deleted = interfaceInfoService.deleteInterfaceInfo(deleteRequest);
+        return ResultUtils.success(deleted);
+
     }
 
 
-    @GetMapping("/get/{id}")
-    public BaseResponse<InterfaceInfo> getInterfaceInfoById(@PathVariable("id") Long id) {
+    @GetMapping("/get")
+    public BaseResponse<InterfaceInfo> getInterfaceInfoById(@RequestParam("id") Long id) {
 
+        ThrowUtils.throwIf(id == null || id <= 0, ErrorCode.PARAMS_ERROR);
 
-        return null;
+        InterfaceInfo interfaceInfo = interfaceInfoService.getById(id);
+
+        return ResultUtils.success(interfaceInfo);
     }
 
 
@@ -77,10 +90,14 @@ public class InterfaceInfoController {
     }
 
 
-    @GetMapping("/list")
-    public Page<InterfaceInfo> listInterfaceInfoByPage(@RequestParam InterfaceInfoPageRequest interfaceInfoPageRequest) {
+    @GetMapping("/list/page")
+    public BaseResponse<Page<InterfaceInfo>> listInterfaceInfoByPage(@ModelAttribute InterfaceInfoPageRequest interfaceInfoPageRequest) {
+        final int pageSize = interfaceInfoPageRequest.getPageSize();
 
-        return new Page<>();
+        final QueryWrapper<InterfaceInfo> wrapper = interfaceInfoService.getPageWrapper(interfaceInfoPageRequest);
+        Page<InterfaceInfo> page = interfaceInfoService.page(new Page<>(0, pageSize), wrapper);
+
+        return ResultUtils.success(page);
     }
 
 
@@ -101,8 +118,13 @@ public class InterfaceInfoController {
 
 
     @PostMapping("/update")
-    public BaseResponse<Boolean> updateInterfaceInfo(UserInterfaceInfoUpdateRequest interfaceInfoUpdateRequest) {
-        return null;
+    public BaseResponse<Boolean> updateInterfaceInfo(@RequestBody InterfaceInfoUpdateRequest interfaceInfoUpdateRequest) {
+        final Long id = interfaceInfoUpdateRequest.getId();
+
+        ThrowUtils.throwIf(id == null || id <= 0, ErrorCode.PARAMS_ERROR);
+
+        final Boolean updated = interfaceInfoService.updateInterfaceInfo(interfaceInfoUpdateRequest);
+        return ResultUtils.success(updated);
     }
 
 

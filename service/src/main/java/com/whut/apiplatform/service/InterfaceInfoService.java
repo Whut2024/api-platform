@@ -1,8 +1,13 @@
 package com.whut.apiplatform.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.whut.apiplatform.model.dto.interfaceinfo.InterfaceInfoPageRequest;
+import com.whut.apiplatform.model.dto.interfaceinfo.InterfaceInfoUpdateRequest;
 import com.whut.apiplatform.model.entity.InterfaceInfo;
 import com.whut.apiplatform.model.entity.User;
+import com.whut.common.DeleteRequest;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -17,4 +22,20 @@ public interface InterfaceInfoService extends IService<InterfaceInfo> {
      */
     @Transactional
     void saveInterfaceInfo(InterfaceInfo interfaceInfo, User user);
+
+    /**
+     * get a wrapper form variables
+     */
+    QueryWrapper<InterfaceInfo> getPageWrapper(InterfaceInfoPageRequest interfaceInfoPageRequest);
+
+
+    /**
+     * update an interface info
+     */
+    Boolean updateInterfaceInfo(InterfaceInfoUpdateRequest interfaceInfoUpdateRequest);
+
+    /**
+     * delete an interface info
+     */
+    Boolean deleteInterfaceInfo(DeleteRequest deleteRequest);
 }

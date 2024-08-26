@@ -13,6 +13,9 @@ public class InterfaceInfoAddRequest {
     private String url;
 
 
+    private String name;
+
+
     private String description;
 
 

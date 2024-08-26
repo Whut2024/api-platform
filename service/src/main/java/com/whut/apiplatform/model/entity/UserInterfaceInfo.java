@@ -3,6 +3,7 @@ package com.whut.apiplatform.model.entity;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.util.Date;
@@ -17,12 +18,15 @@ public class UserInterfaceInfo {
 
 
     @TableId
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     private Long id;
 
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     private Long interfaceInfoId;
 
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     private Long userId;
 
 

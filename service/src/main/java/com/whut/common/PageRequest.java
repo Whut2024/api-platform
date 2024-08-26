@@ -31,4 +31,10 @@ public class PageRequest implements CommonConstant {
      * 排序顺序（默认升序）
      */
     private String sortOrder = CommonConstant.SORT_ORDER_ASC;
+
+
+    /**
+     * 上一页最大ID
+     */
+    private Long latestId;
 }
