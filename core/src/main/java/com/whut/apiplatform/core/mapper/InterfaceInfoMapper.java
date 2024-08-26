@@ -17,7 +17,11 @@ public interface InterfaceInfoMapper extends BaseMapper<InterfaceInfo> {
     /**
      * it is designed for selecting the largest top 3 invoked times for interfaces
      */
-    List<InterfaceInfoVo> getInterfaceInfoVo();
+    List<InterfaceInfoVo> getInterfaceInfoVoForAdmin();
+
+
+    List<InterfaceInfoVo> getInterfaceInfoVoForUser(Long userId);
+
 }
 
 

@@ -1,6 +1,7 @@
 package com.whut.apiplatform.core.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
@@ -22,6 +23,9 @@ import com.whut.webs.exception.ErrorCode;
 import com.whut.webs.exception.ThrowUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
 * @author laowang
@@ -82,6 +86,18 @@ public class InterfaceInfoServiceImpl extends ServiceImpl<InterfaceInfoMapper, I
         wrapper.eq(responseHeader != null, "response_header", responseHeader);
         wrapper.eq(status != null, "status", status);
 
+
+        User user = UserHolder.get();
+        if (!UserRoleEnum.isAdmin(user)) {
+            List<UserInterfaceInfo> userInterfaceInfoList = userInterfaceInfoService.list(new LambdaQueryWrapper<>(UserInterfaceInfo.class).eq(UserInterfaceInfo::getUserId, user.getId()));
+
+            if (CollectionUtil.isNotEmpty(userInterfaceInfoList)) {
+                List<Long> idList = userInterfaceInfoList.stream().map(UserInterfaceInfo::getInterfaceInfoId).collect(Collectors.toList());
+
+                wrapper.in("id", idList);
+            } else
+                wrapper.eq("id", -1);
+        }
 
 
         wrapper.orderBy(SqlUtils.validSortField(sortField),
