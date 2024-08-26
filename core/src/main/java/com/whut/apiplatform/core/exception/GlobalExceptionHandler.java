@@ -1,4 +1,4 @@
-package com.whut.apipaltform.core.exception;
+package com.whut.apiplatform.core.exception;
 
 import com.whut.webs.exception.BusinessException;
 import com.whut.webs.exception.ErrorCode;

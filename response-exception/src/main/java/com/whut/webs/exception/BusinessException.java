@@ -1,10 +1,13 @@
 package com.whut.webs.exception;
 
+import lombok.Getter;
+
 /**
  * 自定义异常类
  *
  whut-online-judge
  */
+@Getter
 public class BusinessException extends RuntimeException {
 
     /**
@@ -27,8 +30,5 @@ public class BusinessException extends RuntimeException {
         this.code = errorCode.getCode();
     }
 
-    public int getCode() {
-        return code;
-    }
 }
 
