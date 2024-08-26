@@ -1,7 +1,7 @@
-package com.whut.apiplatform.service.impl;
+package com.whut.apiplatform.core.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.whut.apiplatform.mapper.InterfaceInfoMapper;
+import com.whut.apiplatform.core.mapper.InterfaceInfoMapper;
 import com.whut.apiplatform.model.entity.InterfaceInfo;
 import com.whut.apiplatform.service.InterfaceInfoService;
 import org.springframework.stereotype.Service;

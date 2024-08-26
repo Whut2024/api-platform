@@ -1,4 +1,4 @@
-package com.whut.apipaltform.core.controller;
+package com.whut.apiplatform.core.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.whut.apiplatform.model.dto.interfaceinfo.InterfaceInfoPageRequest;
@@ -53,7 +53,8 @@ public class InterfaceInfoController {
 
     @GetMapping("/list")
     public Page<InterfaceInfo> listInterfaceInfoByPage(@RequestParam InterfaceInfoPageRequest interfaceInfoPageRequest) {
-        return null;
+
+        return new Page<>();
     }
 
 

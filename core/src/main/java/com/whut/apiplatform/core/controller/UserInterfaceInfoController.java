@@ -1,4 +1,4 @@
-package com.whut.apipaltform.core.controller;
+package com.whut.apiplatform.core.controller;
 
 /**
  * @author whut2024

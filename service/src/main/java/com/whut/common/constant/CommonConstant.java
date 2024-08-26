@@ -1,4 +1,4 @@
-package com.whut.constant;
+package com.whut.common.constant;
 
 /**
  * 通用常量

@@ -1,4 +1,4 @@
-package com.whut.apiplatform.mapper;
+package com.whut.apiplatform.core.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.whut.apiplatform.model.entity.InterfaceInfo;

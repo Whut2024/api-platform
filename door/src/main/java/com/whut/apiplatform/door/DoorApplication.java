@@ -1,4 +1,4 @@
-package com.whut.apipaltform.door;
+package com.whut.apiplatform.door;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

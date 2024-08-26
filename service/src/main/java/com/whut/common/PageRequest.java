@@ -1,6 +1,6 @@
 package com.whut.common;
 
-import com.whut.constant.CommonConstant;
+import com.whut.common.constant.CommonConstant;
 import lombok.Data;
 
 /**
