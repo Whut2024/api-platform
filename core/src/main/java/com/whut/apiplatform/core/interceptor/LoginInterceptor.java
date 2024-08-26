@@ -1,6 +1,7 @@
 package com.whut.apiplatform.core.interceptor;
 
 
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.whut.apiplatform.constant.UserConstant;
 import com.whut.apiplatform.core.utils.UserHolder;
@@ -46,10 +47,12 @@ public class LoginInterceptor implements HandlerInterceptor {
 
         // get token form headers
         String token = request.getHeader("Authorization");
+        if (StrUtil.isBlank(token)) return true;
 
         // get json value from redis
         final String cacheKey = USER_LOGIN_KEY + token;
         String userJson = redisTemplate.opsForValue().get(cacheKey);
+        if (StrUtil.isBlank(userJson)) return true;
         VersionUser user = JSONUtil.toBean(userJson, VersionUser.class);
 
         // todo whether we should lock it
