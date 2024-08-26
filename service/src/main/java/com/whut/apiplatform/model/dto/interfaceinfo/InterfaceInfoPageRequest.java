@@ -32,7 +32,7 @@ public class InterfaceInfoPageRequest extends PageRequest {
     private String requestParam;
 
 
-    private String requestBody;
+    private String responseHeader;
 
 
     private String requestHeader;

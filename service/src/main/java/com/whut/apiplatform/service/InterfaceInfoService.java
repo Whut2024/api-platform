@@ -2,6 +2,8 @@ package com.whut.apiplatform.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.whut.apiplatform.model.entity.InterfaceInfo;
+import com.whut.apiplatform.model.entity.User;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
 * @author laowang
@@ -10,4 +12,9 @@ import com.whut.apiplatform.model.entity.InterfaceInfo;
 */
 public interface InterfaceInfoService extends IService<InterfaceInfo> {
 
+    /**
+     * insert interface info and user interface info to database
+     */
+    @Transactional
+    void saveInterfaceInfo(InterfaceInfo interfaceInfo, User user);
 }

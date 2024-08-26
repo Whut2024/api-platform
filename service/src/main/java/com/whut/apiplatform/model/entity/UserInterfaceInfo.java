@@ -12,7 +12,7 @@ import java.util.Date;
  * @since 2024-08-24
  */
 @Data
-@TableName("user")
+@TableName("user_interface_info")
 public class UserInterfaceInfo {
 
 

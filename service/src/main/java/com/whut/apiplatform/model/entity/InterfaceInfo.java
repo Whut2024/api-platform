@@ -13,7 +13,7 @@ import java.util.Date;
  */
 
 @Data
-@TableName("user")
+@TableName("interface_info")
 public class InterfaceInfo {
 
 
@@ -33,7 +33,7 @@ public class InterfaceInfo {
     private String requestParam;
 
 
-    private String requestBody;
+    private String responseHeader;
 
 
     private String requestHeader;
