@@ -1,8 +1,7 @@
 package com.whut.apiplatform.model.vo;
 
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
-import javafx.scene.control.Tab;
+import cn.hutool.core.bean.BeanUtil;
+import com.whut.apiplatform.model.entity.User;
 import lombok.Data;
 
 import java.util.Date;
@@ -27,8 +26,16 @@ public class UserVo {
     private String userAccount;
 
 
+    private String userRole;
+
+
     private Date createTime;
 
 
     private Date updateTime;
+
+
+    public static UserVo getInstance(User user) {
+        return BeanUtil.copyProperties(user, UserVo.class);
+    }
 }
