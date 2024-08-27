@@ -1,0 +1,22 @@
+server:
+  port: 7530
+
+#Dubbo
+dubbo:
+  consumer:
+    check: false
+  application:
+    name: api-platform-door
+    # qos 服务器
+    qos-enable: true
+    qos-port: 22221
+    qos-accept-foreign-ip: true
+
+  protocol:
+    port: 20881
+
+    #注册中心
+  registry:
+    check: false
+    protocol: nacos
+    address: 123.60.168.252:8848

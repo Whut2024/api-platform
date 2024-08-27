@@ -39,8 +39,8 @@ public class RequestClient {
     }
 
 
-    public InvokedResponse invoke(String method, Map<String, String> paramMap, Map<String, List<String>> headerMap, String body) {
-        final StringBuilder stringBuilder = new StringBuilder(String.format("http://%s:%s", serverHost, serverPort));
+    public InvokedResponse invoke(Long interfaceInfoId, String method, Map<String, String> paramMap, Map<String, List<String>> headerMap, String body) {
+        final StringBuilder stringBuilder = new StringBuilder(String.format("http://%s:%s/%s", serverHost, serverPort, interfaceInfoId));
 
         // prepare for params
         if (CollectionUtil.isNotEmpty(paramMap)) {
@@ -58,6 +58,7 @@ public class RequestClient {
         // set encrypted k-v
         if (headerMap == null)
             headerMap = new HashMap<>();
+        headerMap.put("accessKey", CollectionUtil.newArrayList(accessKey));
         headerMap.put("digest", CollectionUtil.newArrayList(SecureUtil.md5(secretKey + accessKey)));
 
         // prepare for request
