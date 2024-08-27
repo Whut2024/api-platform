@@ -1,0 +1,5 @@
+api-platform:
+  access-key: access
+  secret-key: secret
+  server-host: localhost
+  server-port: 7530
