@@ -33,19 +33,19 @@ import java.util.stream.Collectors;
 import static com.whut.apiplatform.constant.InterfaceInfoConstant.*;
 
 /**
-* @author laowang
-* @description 针对表【interface_info(接口信息表)】的数据库操作Service实现
-* @createDate 2024-08-24 20:59:24
-*/
+ * @author laowang
+ * @description 针对表【interface_info(接口信息表)】的数据库操作Service实现
+ * @createDate 2024-08-24 20:59:24
+ */
 @DubboService
 @AllArgsConstructor
 public class InterfaceInfoServiceImpl extends ServiceImpl<InterfaceInfoMapper, InterfaceInfo>
-    implements InterfaceInfoService{
+        implements InterfaceInfoService {
 
 
     private final UserInterfaceInfoService userInterfaceInfoService;
-    
-    
+
+
     private final StringRedisTemplate redisTemplate;
 
 
@@ -69,16 +69,20 @@ public class InterfaceInfoServiceImpl extends ServiceImpl<InterfaceInfoMapper, I
         final QueryWrapper<InterfaceInfo> wrapper = new QueryWrapper<>();
 
         final Long id = interfaceInfoPageRequest.getId();
+        final String name = interfaceInfoPageRequest.getName();
         final String url = interfaceInfoPageRequest.getUrl();
         final String description = interfaceInfoPageRequest.getDescription();
         final String method = interfaceInfoPageRequest.getMethod();
         final String requestParam = interfaceInfoPageRequest.getRequestParam();
-        final String responseHeader = interfaceInfoPageRequest.getResponseHeader();
         final String requestHeader = interfaceInfoPageRequest.getRequestHeader();
+        final String requestBody = interfaceInfoPageRequest.getRequestBody();
+        final String responseHeader = interfaceInfoPageRequest.getResponseHeader();
+        final String responseBody = interfaceInfoPageRequest.getResponseBody();
         final String status = interfaceInfoPageRequest.getStatus();
         final String sortField = interfaceInfoPageRequest.getSortField();
         final String sortOrder = interfaceInfoPageRequest.getSortOrder();
         final Long latestId = interfaceInfoPageRequest.getLatestId();
+
 
         if (id != null) {
             wrapper.eq("id", id);
@@ -87,11 +91,14 @@ public class InterfaceInfoServiceImpl extends ServiceImpl<InterfaceInfoMapper, I
             wrapper.gt("id", latestId);
 
         wrapper.eq(url != null, "url", url);
+        wrapper.eq(name != null, "name", name);
         wrapper.eq(description != null, "description", description);
         wrapper.eq(method != null, "method", method);
         wrapper.eq(requestHeader != null, "request_header", requestHeader);
         wrapper.eq(requestParam != null, "request_param", requestParam);
         wrapper.eq(responseHeader != null, "response_header", responseHeader);
+        wrapper.eq(requestBody != null, "request_body", requestBody);
+        wrapper.eq(responseBody != null, "response_body", responseBody);
         wrapper.eq(status != null, "status", status);
 
 
@@ -150,7 +157,7 @@ public class InterfaceInfoServiceImpl extends ServiceImpl<InterfaceInfoMapper, I
             redisTemplate.expire(cacheKey, STATUS_TTL, TimeUnit.MINUTES);
             return ONLINE.equals(status);
         }
-        
+
         // else: select from MySQL and cache it
         final LambdaQueryWrapper<InterfaceInfo> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(InterfaceInfo::getId, id);

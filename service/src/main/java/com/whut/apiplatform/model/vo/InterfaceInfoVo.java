@@ -34,10 +34,16 @@ public class InterfaceInfoVo {
     private String requestParam;
 
 
+    private String requestHeader;
+
+
+    private String requestBody;
+
+
     private String responseHeader;
 
 
-    private String requestHeader;
+    private String responseBody;
 
 
     private String status;

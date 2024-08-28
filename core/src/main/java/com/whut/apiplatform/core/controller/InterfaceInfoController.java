@@ -42,13 +42,17 @@ public class InterfaceInfoController {
     @PostMapping("/add")
     public BaseResponse<Long> addInterfaceInfo(@RequestBody InterfaceInfoAddRequest interfaceInfoAddRequest) {
         final String url = interfaceInfoAddRequest.getUrl();
+        final String name = interfaceInfoAddRequest.getName();
         final String description = interfaceInfoAddRequest.getDescription();
         final String method = interfaceInfoAddRequest.getMethod();
         final String requestParam = interfaceInfoAddRequest.getRequestParam();
-        final String responseHeader = interfaceInfoAddRequest.getResponseHeader();
         final String requestHeader = interfaceInfoAddRequest.getRequestHeader();
+        final String requestBody = interfaceInfoAddRequest.getRequestBody();
+        final String responseHeader = interfaceInfoAddRequest.getResponseHeader();
+        final String responseBody = interfaceInfoAddRequest.getResponseBody();
 
-        ThrowUtils.throwIf(!StrUtil.isAllNotBlank(url, description, method, responseHeader, requestParam, requestHeader), ErrorCode.PARAMS_ERROR);
+
+        ThrowUtils.throwIf(!StrUtil.isAllNotBlank(name, requestBody, responseBody, url, description, method, responseHeader, requestParam, requestHeader), ErrorCode.PARAMS_ERROR);
 
         final User user = UserHolder.get();
 
