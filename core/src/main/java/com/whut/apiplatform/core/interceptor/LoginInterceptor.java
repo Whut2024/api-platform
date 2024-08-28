@@ -66,6 +66,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 
             // refresh expiration
             redisTemplate.expire(cacheKey, TOKEN_TTL, TimeUnit.MINUTES);
+            redisTemplate.expire(versionKey, VERSION_TTL, TimeUnit.HOURS);
         }
 
 

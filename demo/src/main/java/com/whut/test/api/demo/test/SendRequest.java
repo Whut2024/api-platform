@@ -29,7 +29,7 @@ public class SendRequest {
         final Map<String, List<String>> headerMap = new HashMap<>();
 
 
-        InvokedResponse invokedResponse = requestClient.invoke(1L,"post", null, headerMap, "string");
+        InvokedResponse invokedResponse = requestClient.invoke(1828614577263648770L,"get", null, headerMap, "string");
 
         System.out.println(invokedResponse);
 

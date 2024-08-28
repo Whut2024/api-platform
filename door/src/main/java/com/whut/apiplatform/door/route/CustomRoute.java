@@ -1,5 +1,7 @@
 package com.whut.apiplatform.door.route;
 
+import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.whut.apiplatform.model.entity.InterfaceInfo;
@@ -31,30 +33,37 @@ public class CustomRoute {
 
     @Bean
     public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
-        Long latestId = 0L;
-        LambdaQueryWrapper<InterfaceInfo> wrapper;
+        long latestId = 0L;
+
+        final RouteLocatorBuilder.Builder routes = builder.routes();
+
         while (true) {
-            wrapper = new LambdaQueryWrapper<>();
-            wrapper.gt(InterfaceInfo::getId, latestId);
+            final String idAndUrlStr = interfaceInfoService.getIdAndUrlStr(latestId);
+            if (StrUtil.isBlank(idAndUrlStr)) break;
 
-            List<InterfaceInfo> interfaceInfoList = interfaceInfoService.page(new Page<>(0, 1024), wrapper).getRecords();
-            latestId = interfaceInfoList.get(interfaceInfoList.size() - 1).getId();
+            String[] idUrlArray = idAndUrlStr.split(" ");
 
-            RouteLocatorBuilder.Builder routes = builder.routes();
+            latestId = Long.parseLong(idUrlArray[idUrlArray.length - 2]);
 
-            for (InterfaceInfo interfaceInfo : interfaceInfoList) {
-                        routes
-                        // 可以继续添加其他路由规则
-                        .route(interfaceInfo.getName(), r -> r
-                                .path("/**")
-                                .filters(f -> f.stripPrefix(0))
-                                .uri(interfaceInfo.getUrl()));
+            long id = 0L;
+            for (int i = 0; i < idUrlArray.length; i++) {
+
+                if (i % 2 == 0)
+                    id = Long.parseLong(idUrlArray[i]);
+                else {
+                    int finalI = i;
+                    routes
+                            // 可以继续添加其他路由规则
+                            .route(String.valueOf(id), r -> r
+                                    .path("/**")
+                                    .filters(f -> f.stripPrefix(0))
+                                    .uri(idUrlArray[finalI]));
+                }
 
             }
-
-            return routes.build();
-
         }
+
+        return routes.build();
         /*return builder.routes()
                 // 定义一个路由：id为my_route，当请求路径为/api/service/**时，转发到http://localhost:8080
                 .route("my_route", r -> r

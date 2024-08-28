@@ -79,4 +79,10 @@
     <select id="selectStatus" resultType="java.lang.String">
         select status from interface_info where is_delete = '0' and id = #{id};
     </select>
+    <select id="getIdAndUrlList" resultType="com.whut.apiplatform.model.entity.InterfaceInfo">
+        select id, url
+        from interface_info
+        where is_delete = '0'
+          and id > #{latestId} limit 0, 1024;
+    </select>
 </mapper>

@@ -40,7 +40,7 @@ public class CustomGlobalFilter implements GlobalFilter {
     private final InterfaceInfoService interfaceInfoService;
 
 
-    @DubboReference
+    @DubboReference(retries = 0)
     private final UserInterfaceInfoService userInterfaceInfoService;
 
 
@@ -57,11 +57,13 @@ public class CustomGlobalFilter implements GlobalFilter {
         HttpHeaders headers = request.getHeaders();
         final String accessKey;
         final String digest;
-        final String id;
+        String id;
         try {
             accessKey = headers.get("accessKey").get(0);
             digest = headers.get("digest").get(0);
             id = request.getURI().toString().split("/")[3];
+            int i = id.indexOf('?');
+            if (i != -1) id = id.substring(0, i);
         } catch (Exception e) {
            throw new BusinessException(ErrorCode.PARAMS_ERROR, "参数缺失");
         }
@@ -76,7 +78,7 @@ public class CustomGlobalFilter implements GlobalFilter {
         ThrowUtils.throwIf(!realDigest.equals(digest), ErrorCode.PARAMS_ERROR, "参数错误");
 
         // 校验接口信息
-        ThrowUtils.throwIf(online, ErrorCode.PARAMS_ERROR, "接口信息不存在或者已经下线");
+        ThrowUtils.throwIf(!online, ErrorCode.PARAMS_ERROR, "接口信息不存在或者已经下线");
 
         // 校验接口剩余量
         Boolean hasLeast = userInterfaceInfoService.checkLeast(id);

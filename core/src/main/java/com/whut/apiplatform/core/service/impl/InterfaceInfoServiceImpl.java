@@ -161,6 +161,22 @@ public class InterfaceInfoServiceImpl extends ServiceImpl<InterfaceInfoMapper, I
         return ONLINE.equals(selectedStatus);
     }
 
+    @Override
+    public String getIdAndUrlStr(Long latestId) {
+        List<InterfaceInfo> interfaceInfoList = this.baseMapper.getIdAndUrlList(latestId);
+
+        StringBuilder builder = new StringBuilder();
+        final int size = interfaceInfoList.size();
+        for (int i = 0; i < size; i++) {
+            InterfaceInfo interfaceInfo = interfaceInfoList.get(i);
+            builder.append(interfaceInfo.getId()).append(' ').append(interfaceInfo.getUrl());
+
+            if (i != size - 1) builder.append(' ');
+        }
+
+        return builder.toString();
+    }
+
 
     public void checkRole(User user, Long interfaceInfoId) {
         if (!UserRoleEnum.isAdmin(user)) {

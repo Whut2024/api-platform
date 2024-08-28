@@ -43,4 +43,9 @@ public interface InterfaceInfoService extends IService<InterfaceInfo> {
      * just check whether the target interface info exists in the table
      */
     Boolean checkExistenceById(String id);
+
+    /**
+     * get interface info's id and url arrayStr
+     */
+    String getIdAndUrlStr(Long latestId);
 }

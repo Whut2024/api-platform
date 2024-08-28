@@ -27,6 +27,9 @@ public interface InterfaceInfoMapper extends BaseMapper<InterfaceInfo> {
      */
     String selectStatus(Long id);
 
+
+    List<InterfaceInfo> getIdAndUrlList(Long latestId);
+
 }
 
 
