@@ -107,17 +107,21 @@ public class InterfaceInfoController {
 
     @PostMapping("/offline")
     public BaseResponse<Boolean> offlineInterfaceInfo(IdRequest idRequest) {
+        final Long id = idRequest.getId();
+        ThrowUtils.throwIf(id == null || id <= 0, ErrorCode.PARAMS_ERROR);
 
-
-        return null;
+        final Boolean result = interfaceInfoService.offlineInterfaceInfo(idRequest.getId());
+        return ResultUtils.success(result);
     }
 
 
     @PostMapping("/online")
     public BaseResponse<Boolean> onlineInterfaceInfo(IdRequest idRequest) {
+        final Long id = idRequest.getId();
+        ThrowUtils.throwIf(id == null || id <= 0, ErrorCode.PARAMS_ERROR);
 
-
-        return null;
+        final Boolean result = interfaceInfoService.onlineInterfaceInfo(idRequest.getId());
+        return ResultUtils.success(result);
     }
 
 

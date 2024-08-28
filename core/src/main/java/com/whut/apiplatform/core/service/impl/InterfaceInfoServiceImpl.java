@@ -5,7 +5,9 @@ import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.whut.apiplatform.constant.InterfaceInfoConstant;
 import com.whut.apiplatform.core.mapper.InterfaceInfoMapper;
 import com.whut.apiplatform.core.utils.SqlUtils;
 import com.whut.apiplatform.core.utils.UserHolder;
@@ -182,6 +184,36 @@ public class InterfaceInfoServiceImpl extends ServiceImpl<InterfaceInfoMapper, I
         }
 
         return builder.toString();
+    }
+
+    @Override
+    public Boolean offlineInterfaceInfo(Long id) {
+        final User user = UserHolder.get();
+        checkRole(user, id);
+
+        final LambdaUpdateWrapper<InterfaceInfo> wrapper = new LambdaUpdateWrapper<>();
+        wrapper.eq(InterfaceInfo::getId, id);
+
+        InterfaceInfo interfaceInfo = new InterfaceInfo();
+        interfaceInfo.setStatus(OFFLINE);
+        interfaceInfo.setId(id);
+
+        return this.updateById(interfaceInfo);
+    }
+
+    @Override
+    public Boolean onlineInterfaceInfo(Long id) {
+        final User user = UserHolder.get();
+        checkRole(user, id);
+
+        final LambdaUpdateWrapper<InterfaceInfo> wrapper = new LambdaUpdateWrapper<>();
+        wrapper.eq(InterfaceInfo::getId, id);
+
+        InterfaceInfo interfaceInfo = new InterfaceInfo();
+        interfaceInfo.setStatus(ONLINE);
+        interfaceInfo.setId(id);
+
+        return this.updateById(interfaceInfo);
     }
 
 

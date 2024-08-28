@@ -11,10 +11,10 @@ import com.whut.common.DeleteRequest;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
-* @author laowang
-* @description 针对表【interface_info(接口信息表)】的数据库操作Service
-* @createDate 2024-08-24 20:59:24
-*/
+ * @author laowang
+ * @description 针对表【interface_info(接口信息表)】的数据库操作Service
+ * @createDate 2024-08-24 20:59:24
+ */
 public interface InterfaceInfoService extends IService<InterfaceInfo> {
 
     /**
@@ -48,4 +48,14 @@ public interface InterfaceInfoService extends IService<InterfaceInfo> {
      * get interface info's id and url arrayStr
      */
     String getIdAndUrlStr(Long latestId);
+
+    /**
+     * offline an interface info
+     */
+    Boolean offlineInterfaceInfo(Long id);
+
+    /**
+     * online an interface info
+     */
+    Boolean onlineInterfaceInfo(Long id);
 }
