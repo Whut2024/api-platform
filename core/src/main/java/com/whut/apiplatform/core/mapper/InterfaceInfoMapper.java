@@ -22,6 +22,11 @@ public interface InterfaceInfoMapper extends BaseMapper<InterfaceInfo> {
 
     List<InterfaceInfoVo> getInterfaceInfoVoForUser(Long userId);
 
+    /**
+     * only select status by id
+     */
+    String selectStatus(Long id);
+
 }
 
 

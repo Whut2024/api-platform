@@ -1,5 +1,6 @@
 package com.whut.apiplatform.door.filter;
 
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
 import com.whut.apiplatform.model.entity.InterfaceInfo;
 import com.whut.apiplatform.model.entity.User;
@@ -66,12 +67,12 @@ public class CustomGlobalFilter implements GlobalFilter {
         }
 
         // 并发获取对象
-        final User user = userService.getByAccessKey(accessKey);
+        final String secretKey = userService.getByAccessKey(accessKey);
         final Boolean online = interfaceInfoService.checkExistenceById(id);
 
         // 校验用户信息
-        ThrowUtils.throwIf(user == null, ErrorCode.PARAMS_ERROR, "用户信息不存在");
-        final String realDigest = SecureUtil.md5(user.getSecretKey() + accessKey);
+        ThrowUtils.throwIf(StrUtil.isBlank(secretKey), ErrorCode.PARAMS_ERROR, "用户信息不存在");
+        final String realDigest = SecureUtil.md5(secretKey + accessKey);
         ThrowUtils.throwIf(!realDigest.equals(digest), ErrorCode.PARAMS_ERROR, "参数错误");
 
         // 校验接口信息

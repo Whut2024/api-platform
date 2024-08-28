@@ -10,4 +10,9 @@ import com.whut.apiplatform.model.entity.UserInterfaceInfo;
 */
 public interface UserInterfaceInfoService extends IService<UserInterfaceInfo> {
 
+    /**
+     * check whether the target interface info's invokable number is bigger than zero.
+     * If it is bigger, it will be subtracted
+     */
+    Boolean checkLeast(String interfaceInfoId);
 }

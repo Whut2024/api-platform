@@ -26,4 +26,9 @@ public interface UserService extends IService<User> {
      * register a user and generate an id
      */
     Long register(UserRegisterRequest userRegisterRequest);
+
+    /**
+     * get user information by access key
+     */
+    String getByAccessKey(String accessKey);
 }

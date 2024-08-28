@@ -38,4 +38,9 @@ public interface InterfaceInfoService extends IService<InterfaceInfo> {
      * delete an interface info
      */
     Boolean deleteInterfaceInfo(DeleteRequest deleteRequest);
+
+    /**
+     * just check whether the target interface info exists in the table
+     */
+    Boolean checkExistenceById(String id);
 }

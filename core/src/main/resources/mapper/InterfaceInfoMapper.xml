@@ -43,8 +43,10 @@
         from interface_info ii,
              (select interface_info_id, user_id, total_num
               from user_interface_info uii
+              where is_delete = '0'
               order by uii.total_num - uii.left_num limit 0, 3) inner_table
-        where ii.id = inner_table.interface_info_id;
+        where is_delete = '0'
+          and ii.id = inner_table.interface_info_id;
 
     </select>
 
@@ -66,9 +68,15 @@
                total_num
         from interface_info ii,
              (select interface_info_id, user_id, total_num
-              from user_interface_info uii where uii.user_id = #{userId}
-              order by uii.total_num - uii.left_num  limit 0, 3) inner_table
-        where ii.id = inner_table.interface_info_id;
+              from user_interface_info uii
+              where is_delete = '0'
+                and uii.user_id = #{userId}
+              order by uii.total_num - uii.left_num limit 0, 3) inner_table
+        where is_delete = '0'
+          and ii.id = inner_table.interface_info_id;
 
+    </select>
+    <select id="selectStatus" resultType="java.lang.String">
+        select status from interface_info where is_delete = '0' and id = #{id};
     </select>
 </mapper>

@@ -11,6 +11,7 @@ import com.whut.apiplatform.model.entity.User;
 */
 public interface UserMapper extends BaseMapper<User> {
 
+    String getSecretKey(String accessKey);
 }
 
 

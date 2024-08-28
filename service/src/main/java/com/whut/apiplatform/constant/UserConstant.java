@@ -20,4 +20,7 @@ public interface UserConstant {
 
 
     Long TOKEN_TTL = 30L;
+
+
+    Long VERSION_TTL = 24L;
 }

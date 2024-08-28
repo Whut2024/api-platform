@@ -18,6 +18,7 @@ import com.whut.webs.exception.BusinessException;
 import com.whut.webs.exception.ErrorCode;
 import com.whut.webs.exception.ThrowUtils;
 import lombok.AllArgsConstructor;
+import org.apache.dubbo.config.annotation.DubboService;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -33,7 +34,7 @@ import static com.whut.apiplatform.constant.UserConstant.*;
 * @description 针对表【user(用户表)】的数据库操作Service实现
 * @createDate 2024-08-24 20:59:37
 */
-@Service
+@DubboService
 @AllArgsConstructor
 public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     implements UserService {
@@ -80,6 +81,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
                 final String versionUserJson = JSONUtil.toJsonStr(versionUser);
 
                 redisTemplate.opsForValue().set(cacheKey, versionUserJson, TOKEN_TTL, TimeUnit.MINUTES);
+                redisTemplate.expire(versionKey, VERSION_TTL, TimeUnit.HOURS);
 
                 // return token and user
                 final TokenUser tokenUser = BeanUtil.copyProperties(user, TokenUser.class);
@@ -106,6 +108,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     @Override
     public Long register(UserRegisterRequest userRegisterRequest) {
         return 0L;
+    }
+
+    @Override
+    public String getByAccessKey(String accessKey) {
+        return this.baseMapper.getSecretKey(accessKey);
     }
 }
 

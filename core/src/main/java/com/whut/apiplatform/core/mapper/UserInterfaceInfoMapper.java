@@ -11,6 +11,7 @@ import com.whut.apiplatform.model.entity.UserInterfaceInfo;
 */
 public interface UserInterfaceInfoMapper extends BaseMapper<UserInterfaceInfo> {
 
+    Integer getLeftNum(Long interfaceInfoId);
 }
 
 

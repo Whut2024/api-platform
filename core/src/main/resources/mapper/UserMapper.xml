@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.whut.apipaltform.core.mapper.UserMapper">
+<mapper namespace="com.whut.apiplatform.core.mapper.UserMapper">
 
     <resultMap id="BaseResultMap" type="com.whut.apiplatform.model.entity.User">
             <id property="id" column="id" jdbcType="BIGINT"/>
@@ -18,10 +18,8 @@
             <result property="isDelete" column="is_delete" jdbcType="CHAR"/>
     </resultMap>
 
-    <sql id="Base_Column_List">
-        id,user_name,user_avatar,
-        user_account,user_password,user_role,
-        access_key,secret_key,create_time,
-        update_time,is_delete
-    </sql>
+
+    <select id="getSecretKey" resultType="java.lang.String">
+        select secret_key from api_platform.user where is_delete = '0' and access_key = #{accessKey};
+    </select>
 </mapper>

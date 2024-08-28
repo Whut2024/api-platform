@@ -31,3 +31,25 @@ mybatis-plus:
       logic-delete-field: isDelete # 全局逻辑删除的实体字段名
       logic-delete-value: 1 # 逻辑已删除值（默认为 1）
       logic-not-delete-value: 0 # 逻辑未删除值（默认为 0）
+
+
+
+#Dubbo
+dubbo:
+  consumer:
+    check: false
+  application:
+    name: api-platform-core
+    # qos 服务器
+    qos-enable: true
+    qos-port: 22222
+    qos-accept-foreign-ip: true
+
+  protocol:
+    port: 20880
+
+    #注册中心
+  registry:
+    check: false
+    protocol: nacos
+    address: 123.60.168.252:8848

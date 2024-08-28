@@ -2,9 +2,9 @@ package com.whut.apiplatform.core.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.whut.apiplatform.core.mapper.InterfaceInfoMapper;
 import com.whut.apiplatform.core.utils.SqlUtils;
@@ -22,23 +22,31 @@ import com.whut.common.constant.CommonConstant;
 import com.whut.webs.exception.ErrorCode;
 import com.whut.webs.exception.ThrowUtils;
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
+import org.apache.dubbo.config.annotation.DubboService;
+import org.springframework.data.redis.core.StringRedisTemplate;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
 import java.util.stream.Collectors;
+
+import static com.whut.apiplatform.constant.InterfaceInfoConstant.*;
 
 /**
 * @author laowang
 * @description 针对表【interface_info(接口信息表)】的数据库操作Service实现
 * @createDate 2024-08-24 20:59:24
 */
-@Service
+@DubboService
 @AllArgsConstructor
 public class InterfaceInfoServiceImpl extends ServiceImpl<InterfaceInfoMapper, InterfaceInfo>
     implements InterfaceInfoService{
 
 
     private final UserInterfaceInfoService userInterfaceInfoService;
+    
+    
+    private final StringRedisTemplate redisTemplate;
 
 
     @Override
@@ -129,6 +137,28 @@ public class InterfaceInfoServiceImpl extends ServiceImpl<InterfaceInfoMapper, I
         checkRole(user, id);
 
         return this.removeById(id);
+    }
+
+    @Override
+    public Boolean checkExistenceById(String id) {
+        // select from redis cache 
+        final String cacheKey = INTERFACE_INFO_STATUS_KEY + id;
+        final String status = redisTemplate.opsForValue().get(cacheKey);
+
+        // it exists: check whether the interface info is online
+        if (StrUtil.isNotBlank(status)) {
+            redisTemplate.expire(cacheKey, STATUS_TTL, TimeUnit.MINUTES);
+            return ONLINE.equals(status);
+        }
+        
+        // else: select from MySQL and cache it
+        final LambdaQueryWrapper<InterfaceInfo> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(InterfaceInfo::getId, id);
+
+        final String selectedStatus = this.baseMapper.selectStatus(Long.parseLong(id));
+        redisTemplate.opsForValue().set(cacheKey, selectedStatus, STATUS_TTL, TimeUnit.MINUTES);
+
+        return ONLINE.equals(selectedStatus);
     }
 
 
