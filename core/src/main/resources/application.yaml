@@ -53,3 +53,11 @@ dubbo:
     check: false
     protocol: nacos
     address: 123.60.168.252:8848
+
+
+canal:
+  username:
+  password:
+  host: 123.60.168.252
+  port: 11111
+  destination: example

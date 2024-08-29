@@ -35,7 +35,10 @@ public class UserInterfaceInfoServiceImpl extends ServiceImpl<UserInterfaceInfoM
     private final RedissonClient redissonClient;
 
 
-    private final static ExecutorService UPDATE_CACHE_POOL = Executors.newCachedThreadPool();
+    private final static ExecutorService UPDATE_POOL = Executors.newCachedThreadPool();
+
+
+
 
 
     @Override
@@ -61,7 +64,7 @@ public class UserInterfaceInfoServiceImpl extends ServiceImpl<UserInterfaceInfoM
 
                 final long storeNum = this.baseMapper.getLeftNum(Long.valueOf(interfaceInfoId)) - 1;
 
-                UPDATE_CACHE_POOL.submit(() ->
+                UPDATE_POOL.submit(() ->
                         redisTemplate.opsForValue().set(cacheKey, String.valueOf(storeNum), LEFT_TTL, TimeUnit.HOURS));
 
                 return storeNum >= 0;
@@ -90,7 +93,7 @@ public class UserInterfaceInfoServiceImpl extends ServiceImpl<UserInterfaceInfoM
     boolean decreaseAndUpdateLeft(String cacheKey) {
         Long resultNum = redisTemplate.opsForValue().decrement(cacheKey);
 
-        UPDATE_CACHE_POOL.submit(() -> redisTemplate.expire(cacheKey, LEFT_TTL, TimeUnit.HOURS));
+        UPDATE_POOL.submit(() -> redisTemplate.expire(cacheKey, LEFT_TTL, TimeUnit.HOURS));
 
         return resultNum >= 0;
     }

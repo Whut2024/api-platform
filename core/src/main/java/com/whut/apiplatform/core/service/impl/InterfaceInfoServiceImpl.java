@@ -92,16 +92,16 @@ public class InterfaceInfoServiceImpl extends ServiceImpl<InterfaceInfoMapper, I
         } else if (latestId != null)
             wrapper.gt("id", latestId);
 
-        wrapper.eq(url != null, "url", url);
-        wrapper.eq(name != null, "name", name);
-        wrapper.eq(description != null, "description", description);
-        wrapper.eq(method != null, "method", method);
-        wrapper.eq(requestHeader != null, "request_header", requestHeader);
-        wrapper.eq(requestParam != null, "request_param", requestParam);
-        wrapper.eq(responseHeader != null, "response_header", responseHeader);
-        wrapper.eq(requestBody != null, "request_body", requestBody);
-        wrapper.eq(responseBody != null, "response_body", responseBody);
-        wrapper.eq(status != null, "status", status);
+        wrapper.eq(StrUtil.isNotBlank(url), "url", url);
+        wrapper.eq(StrUtil.isNotBlank(name), "name", name);
+        wrapper.eq(StrUtil.isNotBlank(description), "description", description);
+        wrapper.eq(StrUtil.isNotBlank(method), "method", method);
+        wrapper.eq(StrUtil.isNotBlank(requestHeader), "request_header", requestHeader);
+        wrapper.eq(StrUtil.isNotBlank(requestParam), "request_param", requestParam);
+        wrapper.eq(StrUtil.isNotBlank(requestHeader), "response_header", responseHeader);
+        wrapper.eq(StrUtil.isNotBlank(requestBody), "request_body", requestBody);
+        wrapper.eq(StrUtil.isNotBlank(responseBody), "response_body", responseBody);
+        wrapper.eq(StrUtil.isNotBlank(status), "status", status);
 
 
         User user = UserHolder.get();

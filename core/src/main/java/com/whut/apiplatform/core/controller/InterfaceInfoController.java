@@ -2,18 +2,13 @@ package com.whut.apiplatform.core.controller;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.whut.apiplatform.core.utils.UserHolder;
 import com.whut.apiplatform.model.dto.interfaceinfo.InterfaceInfoPageRequest;
 import com.whut.apiplatform.model.dto.interfaceinfo.InterfaceInfoUpdateRequest;
-import com.whut.apiplatform.model.dto.userinterfaceinfo.UserInterfaceInfoUpdateRequest;
 import com.whut.apiplatform.model.entity.User;
-import com.whut.apiplatform.model.entity.UserInterfaceInfo;
-import com.whut.apiplatform.model.enums.UserRoleEnum;
 import com.whut.apiplatform.service.InterfaceInfoService;
-import com.whut.apiplatform.service.UserInterfaceInfoService;
 import com.whut.common.DeleteRequest;
 import com.whut.apiplatform.model.dto.interfaceinfo.InterfaceInfoAddRequest;
 import com.whut.apiplatform.model.dto.interfaceinfo.InterfaceInfoInvokeRequest;
@@ -116,7 +111,7 @@ public class InterfaceInfoController {
 
 
     @PostMapping("/online")
-    public BaseResponse<Boolean> onlineInterfaceInfo(IdRequest idRequest) {
+    public BaseResponse<Boolean> onlineInterfaceInfo(@RequestBody IdRequest idRequest) {
         final Long id = idRequest.getId();
         ThrowUtils.throwIf(id == null || id <= 0, ErrorCode.PARAMS_ERROR);
 

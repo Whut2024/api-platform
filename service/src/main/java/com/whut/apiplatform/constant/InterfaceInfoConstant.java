@@ -20,4 +20,7 @@ public interface InterfaceInfoConstant {
 
 
     String OFFLINE = "0";
+
+
+    String TABLE_NAME = "interface_info";
 }
