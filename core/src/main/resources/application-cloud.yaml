@@ -1,0 +1,20 @@
+spring:
+  redis:
+    host: localhost
+
+  # 数据库配置
+  datasource:
+    url: jdbc:mysql://localhost:3300/api_platform
+
+
+
+#Dubbo
+dubbo:
+    #注册中心
+  registry:
+    address: localhost:8848
+
+
+canal:
+  host: localhost
+

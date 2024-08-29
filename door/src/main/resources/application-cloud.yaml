@@ -1,0 +1,5 @@
+#Dubbo
+dubbo:
+    #注册中心
+  registry:
+    address: localhost:8848
