@@ -84,7 +84,13 @@ const Index: React.FC = () => {
       <Divider />
       <Card title="在线测试">
         <Form name="invoke" layout="vertical" onFinish={onFinish}>
-          <Form.Item label="请求参数" name="userrequestParam">
+          <Form.Item label="请求参数" name="requestParamJson">
+            <Input.TextArea />
+          </Form.Item>
+          <Form.Item label="请求头" name="requestHeaderJson">
+            <Input.TextArea />
+          </Form.Item>
+          <Form.Item label="请求体" name="requestBodyStr">
             <Input.TextArea />
           </Form.Item>
           <Form.Item wrapperCol={{ span: 16 }}>
