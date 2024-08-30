@@ -1,5 +1,6 @@
 package com.whut.apiplatform.core.job;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.alibaba.otter.canal.client.CanalConnector;
 import com.alibaba.otter.canal.protocol.CanalEntry;
 import com.alibaba.otter.canal.protocol.Message;
@@ -77,6 +78,8 @@ public class ListenCanalJob {
                 // 获取表名称
                 final String tableName = entry.getHeader().getTableName();
                 List<? extends CanalListenerTemplate> canalListenerTemplateList = canalListenerTemplateListMap.get(tableName);
+                if (CollectionUtil.isEmpty(canalListenerTemplateList)) continue;
+
                 for (CanalListenerTemplate canalListenerTemplate : canalListenerTemplateList) {
                     canalListenerTemplate.invoke(entry);
                 }

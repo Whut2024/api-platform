@@ -1,5 +1,6 @@
 package com.whut.apiplatform.core.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.whut.apiplatform.core.mapper.UserInterfaceInfoMapper;
 import com.whut.apiplatform.model.entity.UserInterfaceInfo;
@@ -157,7 +158,7 @@ public class UserInterfaceInfoServiceImpl extends ServiceImpl<UserInterfaceInfoM
      * initialDelay = 1000L 表示任务启动后延迟1000毫秒执行第一次
      */
     @Scheduled(fixedRate = 50L, initialDelay = 1000L)
-    private void updateLeastInDB() {
+    protected void updateLeastInDB() {
         Map.Entry<Long, Integer> firstEntry = idLeftNumberMap.firstEntry();
         if (firstEntry == null)
             return;
@@ -189,10 +190,14 @@ public class UserInterfaceInfoServiceImpl extends ServiceImpl<UserInterfaceInfoM
 
         }
 
+
+        LambdaUpdateWrapper<UserInterfaceInfo> wrapper = new LambdaUpdateWrapper<>();
+        wrapper.eq(UserInterfaceInfo::getInterfaceInfoId, id);
+
         UserInterfaceInfo userInterfaceInfo = new UserInterfaceInfo();
-        userInterfaceInfo.setId(firstEntry.getKey());
         userInterfaceInfo.setLeftNum(leftNum);
-        boolean updated = this.updateById(userInterfaceInfo);
+
+        boolean updated = this.update(userInterfaceInfo, wrapper);
 
 
         // todo check whether it updated successfully
