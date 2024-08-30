@@ -2,6 +2,7 @@ package com.whut.apiplatform.core.controller;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.whut.apiplatform.core.utils.UserHolder;
@@ -83,9 +84,19 @@ public class InterfaceInfoController {
 
 
     @PostMapping("/invoke")
-    public BaseResponse<Object> invokeInterfaceInfo(InterfaceInfoInvokeRequest interfaceInfoInvokeRequest) {
+    public BaseResponse<Object> invokeInterfaceInfo(@RequestBody InterfaceInfoInvokeRequest interfaceInfoInvokeRequest) {
+        final Long id = interfaceInfoInvokeRequest.getId();
+        final String requestParamJson = interfaceInfoInvokeRequest.getRequestParamJson();
+        final String requestBodyStr = interfaceInfoInvokeRequest.getRequestBodyStr();
+        final String requestHeaderJson = interfaceInfoInvokeRequest.getRequestHeaderJson();
 
-        return null;
+        ThrowUtils.throwIf(id == null || id <= 0, ErrorCode.PARAMS_ERROR);
+
+        final Object invokedResponse = this.interfaceInfoService.invoke(id, requestParamJson, requestHeaderJson, requestBodyStr);
+
+        final String jsonStr = JSONUtil.toJsonStr(invokedResponse);
+
+        return ResultUtils.success(jsonStr);
     }
 
 

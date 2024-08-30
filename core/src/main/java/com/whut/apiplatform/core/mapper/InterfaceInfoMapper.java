@@ -20,6 +20,12 @@ public interface InterfaceInfoMapper extends BaseMapper<InterfaceInfo> {
     List<InterfaceInfoVo> getInterfaceInfoVoForAdmin();
 
 
+    /**
+     * 根据用户ID获取用户接口信息列表
+     *
+     * @param userId 用户ID
+     * @return 用户接口信息列表
+     */
     List<InterfaceInfoVo> getInterfaceInfoVoForUser(Long userId);
 
     /**
@@ -28,7 +34,17 @@ public interface InterfaceInfoMapper extends BaseMapper<InterfaceInfo> {
     String selectStatus(Long id);
 
 
+    /**
+     * 获取指定ID后的接口信息列表
+     *
+     * @param latestId 最新接口ID，返回结果中的ID应大于该值
+     * @return 接口信息列表，每个接口信息包括接口ID和接口URL
+     */
     List<InterfaceInfo> getIdAndUrlList(Long latestId);
+
+
+
+    InterfaceInfo getMethodAndUrl(Long id);
 
 }
 

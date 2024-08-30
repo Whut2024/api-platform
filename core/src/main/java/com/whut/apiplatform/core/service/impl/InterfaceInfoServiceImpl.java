@@ -2,12 +2,14 @@ package com.whut.apiplatform.core.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.lang.TypeReference;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.core.util.URLUtil;
+import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.whut.apiplatform.constant.InterfaceInfoConstant;
 import com.whut.apiplatform.core.mapper.InterfaceInfoMapper;
 import com.whut.apiplatform.core.utils.SqlUtils;
 import com.whut.apiplatform.core.utils.UserHolder;
@@ -19,6 +21,7 @@ import com.whut.apiplatform.model.entity.UserInterfaceInfo;
 import com.whut.apiplatform.model.enums.UserRoleEnum;
 import com.whut.apiplatform.service.InterfaceInfoService;
 import com.whut.apiplatform.service.UserInterfaceInfoService;
+import com.whut.apiplatform.starter.RequestClient;
 import com.whut.common.DeleteRequest;
 import com.whut.common.constant.CommonConstant;
 import com.whut.webs.exception.ErrorCode;
@@ -27,9 +30,10 @@ import lombok.AllArgsConstructor;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
+import java.net.URL;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static com.whut.apiplatform.constant.InterfaceInfoConstant.*;
@@ -49,6 +53,9 @@ public class InterfaceInfoServiceImpl extends ServiceImpl<InterfaceInfoMapper, I
 
 
     private final StringRedisTemplate redisTemplate;
+
+
+    private final RequestClient requestClient;
 
 
     @Override
@@ -214,6 +221,19 @@ public class InterfaceInfoServiceImpl extends ServiceImpl<InterfaceInfoMapper, I
         interfaceInfo.setId(id);
 
         return this.updateById(interfaceInfo);
+    }
+
+    @Override
+    public Object invoke(Long id, String requestParamJson, String requestHeaderJson, String requestBodyStr) {
+        final InterfaceInfo interfaceInfo = this.baseMapper.getMethodAndUrl(id);
+        final URL url = URLUtil.url(interfaceInfo.getUrl());
+
+        final Map<String, String> paramMap = JSONUtil.toBean(requestParamJson, new TypeReference<Map<String, String>>() {
+        }, false);
+        final Map<String, List<String>> headerMap = JSONUtil.toBean(requestHeaderJson, new TypeReference<Map<String, List<String>>>() {
+        }, false);
+
+        return requestClient.invoke(id, url.getHost(), String.valueOf(url.getPort()), interfaceInfo.getMethod(), paramMap, headerMap, requestBodyStr);
     }
 
 

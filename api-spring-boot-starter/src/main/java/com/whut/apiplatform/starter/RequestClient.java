@@ -40,7 +40,13 @@ public class RequestClient {
 
 
     public InvokedResponse invoke(Long interfaceInfoId, String method, Map<String, String> paramMap, Map<String, List<String>> headerMap, String body) {
-        final StringBuilder stringBuilder = new StringBuilder(String.format("http://%s:%s/%s", serverHost, serverPort, interfaceInfoId));
+        return invoke(interfaceInfoId, serverHost, serverPort, method, paramMap, headerMap, body);
+
+    }
+
+
+    public InvokedResponse invoke(Long interfaceInfoId, String host, String port, String method, Map<String, String> paramMap, Map<String, List<String>> headerMap, String body) {
+        final StringBuilder stringBuilder = new StringBuilder(String.format("http://%s:%s/%s", host, port, interfaceInfoId));
 
         // prepare for params
         if (CollectionUtil.isNotEmpty(paramMap)) {
@@ -79,7 +85,5 @@ public class RequestClient {
             if (response != null)
                 response.close();
         }
-
     }
-
 }

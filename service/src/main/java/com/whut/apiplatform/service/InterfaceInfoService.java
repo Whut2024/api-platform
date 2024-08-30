@@ -58,4 +58,16 @@ public interface InterfaceInfoService extends IService<InterfaceInfo> {
      * online an interface info
      */
     Boolean onlineInterfaceInfo(Long id);
+
+
+    /**
+     * 调用指定ID的接口
+     *
+     * @param id 接口ID
+     * @param requestParamJson 请求参数JSON字符串
+     * @param requestHeaderJson 请求头JSON字符串
+     * @param requestBodyStr 请求体JSON字符串
+     * @return 接口调用结果对象
+     */
+    Object invoke(Long id, String requestParamJson, String requestHeaderJson, String requestBodyStr);
 }

@@ -11,7 +11,7 @@ import java.util.Map;
  * @author whut2024
  * @since 2024-08-27
  */
-@Getter
+@Data
 @AllArgsConstructor
 public class InvokedResponse {
 
