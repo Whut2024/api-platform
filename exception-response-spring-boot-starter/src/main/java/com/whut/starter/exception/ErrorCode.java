@@ -1,4 +1,4 @@
-package com.whut.webs.exception;
+package com.whut.starter.exception;
 
 /**
  * 自定义错误码

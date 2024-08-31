@@ -1,4 +1,6 @@
-package com.whut.webs.exception;
+package com.whut.starter.exception;
+
+
 
 /**
  * 抛异常工具类

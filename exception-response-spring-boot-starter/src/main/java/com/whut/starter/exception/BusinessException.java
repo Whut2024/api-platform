@@ -1,4 +1,4 @@
-package com.whut.webs.exception;
+package com.whut.starter.exception;
 
 import lombok.Getter;
 

@@ -2,11 +2,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.whut.apiplatform</groupId>
-    <artifactId>door</artifactId>
+    <groupId>com.whut</groupId>
+    <artifactId>exception-response-spring-boot-starter</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>door</name>
-    <description>door</description>
+    <name>exception-response-spring-boot-starter</name>
+    <description>exception-response-spring-boot-starter</description>
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -14,47 +14,26 @@
         <spring-boot.version>2.6.13</spring-boot.version>
     </properties>
     <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
 
-        <!--lombok-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-        </dependency>
-
-        <!--exception response-->
-        <dependency>
-            <groupId>com.whut</groupId>
-            <artifactId>exception-response-spring-boot-starter</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-
-        <!--gate-way-->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-gateway</artifactId>
-            <version>3.1.4</version>
-        </dependency>
-
-
-        <!--Dubbo配件-->
-        <dependency>
-            <groupId>org.apache.dubbo</groupId>
-            <artifactId>dubbo-spring-boot-starter</artifactId>
-            <version>3.2.12</version>
+            <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>org.apache.dubbo</groupId>
-            <artifactId>dubbo-registry-nacos</artifactId>
-            <version>3.2.12</version>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <optional>false</optional>
         </dependency>
-
-        <!--service-->
-        <dependency>
-            <groupId>com.whut.apiplatform</groupId>
-            <artifactId>service</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-
     </dependencies>
     <dependencyManagement>
         <dependencies>
@@ -85,8 +64,8 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring-boot.version}</version>
                 <configuration>
-                    <mainClass>com.whut.apiplatform.door.DoorApplication</mainClass>
-                    <skip>false</skip>
+                    <mainClass>com.whut.starter.ExceptionResponseSpringBootStarterApplication</mainClass>
+                    <skip>true</skip>
                 </configuration>
                 <executions>
                     <execution>

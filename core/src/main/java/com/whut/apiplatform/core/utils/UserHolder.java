@@ -1,8 +1,8 @@
 package com.whut.apiplatform.core.utils;
 
 import com.whut.apiplatform.model.entity.User;
-import com.whut.webs.exception.ErrorCode;
-import com.whut.webs.exception.ThrowUtils;
+import com.whut.starter.exception.ErrorCode;
+import com.whut.starter.exception.ThrowUtils;
 
 /**
  * store use in a thread map

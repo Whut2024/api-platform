@@ -34,9 +34,9 @@
 
         <!--response exception-->
         <dependency>
-            <groupId>com.whut.web</groupId>
-            <artifactId>response-exception</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <groupId>com.whut</groupId>
+            <artifactId>exception-response-spring-boot-starter</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
         <!--mybatis plus-->

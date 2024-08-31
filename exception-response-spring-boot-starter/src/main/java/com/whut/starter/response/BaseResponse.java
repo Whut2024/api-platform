@@ -1,9 +1,10 @@
-package com.whut.webs.response;
+package com.whut.starter.response;
+
+
+import com.whut.starter.exception.ErrorCode;
+import lombok.Data;
 
 import java.io.Serializable;
-
-import com.whut.webs.exception.ErrorCode;
-import lombok.Data;
 
 /**
  * 通用返回类

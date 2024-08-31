@@ -14,15 +14,14 @@ import com.whut.apiplatform.model.dto.user.UserRegisterRequest;
 import com.whut.apiplatform.model.dto.user.VersionUser;
 import com.whut.apiplatform.model.entity.User;
 import com.whut.apiplatform.service.UserService;
-import com.whut.webs.exception.BusinessException;
-import com.whut.webs.exception.ErrorCode;
-import com.whut.webs.exception.ThrowUtils;
+import com.whut.starter.exception.BusinessException;
+import com.whut.starter.exception.ErrorCode;
+import com.whut.starter.exception.ThrowUtils;
 import lombok.AllArgsConstructor;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.concurrent.TimeUnit;

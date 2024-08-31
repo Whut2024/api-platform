@@ -1,6 +1,8 @@
-package com.whut.webs.response;
+package com.whut.starter.response;
 
-import com.whut.webs.exception.ErrorCode;
+import com.whut.starter.exception.ErrorCode;
+
+;
 
 /**
  * 返回工具类

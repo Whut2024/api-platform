@@ -7,10 +7,10 @@ import com.whut.apiplatform.model.dto.user.UserRegisterRequest;
 import com.whut.apiplatform.model.entity.User;
 import com.whut.apiplatform.model.vo.UserVo;
 import com.whut.apiplatform.service.UserService;
-import com.whut.webs.exception.ErrorCode;
-import com.whut.webs.exception.ThrowUtils;
-import com.whut.webs.response.BaseResponse;
-import com.whut.webs.response.ResultUtils;
+import com.whut.starter.exception.ErrorCode;
+import com.whut.starter.exception.ThrowUtils;
+import com.whut.starter.response.BaseResponse;
+import com.whut.starter.response.ResultUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

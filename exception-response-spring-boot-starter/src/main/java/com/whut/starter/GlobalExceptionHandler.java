@@ -1,17 +1,16 @@
-package com.whut.apiplatform.core.exception;
+package com.whut.starter;
 
-import com.whut.webs.exception.BusinessException;
-import com.whut.webs.exception.ErrorCode;
-import com.whut.webs.response.BaseResponse;
-import com.whut.webs.response.ResultUtils;
+
+import com.whut.starter.exception.BusinessException;
+import com.whut.starter.exception.ErrorCode;
+import com.whut.starter.response.BaseResponse;
+import com.whut.starter.response.ResultUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
  * 全局异常处理器
- *
-whut-online-judge
  */
 @RestControllerAdvice
 @Slf4j
