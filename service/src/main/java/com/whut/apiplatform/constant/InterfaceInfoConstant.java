@@ -10,6 +10,9 @@ public interface InterfaceInfoConstant {
     String INTERFACE_INFO_STATUS_KEY = "interfaceinfo:status:";
 
 
+    String INTERFACE_INFO_STATUS_LOCK_KEY = "interfaceinfo:status:lock:";
+
+
     Long STATUS_TTL = 30L;
 
 

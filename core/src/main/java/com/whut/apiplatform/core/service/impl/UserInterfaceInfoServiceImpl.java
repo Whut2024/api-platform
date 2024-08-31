@@ -107,6 +107,11 @@ public class UserInterfaceInfoServiceImpl extends ServiceImpl<UserInterfaceInfoM
         }
     }
 
+    @Override
+    public UserInterfaceInfo getUserIdByInterfaceInfoId(Long interfaceInfoId) {
+        return this.baseMapper.getUserIdByInterfaceInfoId(interfaceInfoId);
+    }
+
 
     /**
      * 减少并更新Redis缓存中指定键的值，并更新内存映射中对应id的剩余数量

@@ -15,4 +15,14 @@ public interface UserInterfaceInfoService extends IService<UserInterfaceInfo> {
      * If it is bigger, it will be subtracted
      */
     Boolean checkLeast(String interfaceInfoId);
+
+
+    /**
+     * 根据接口信息ID获取用户界面信息
+     *
+     * @param interfaceInfoId 接口信息ID
+     * @return 返回对应的用户界面信息
+     */
+    UserInterfaceInfo getUserIdByInterfaceInfoId(Long interfaceInfoId);
+
 }

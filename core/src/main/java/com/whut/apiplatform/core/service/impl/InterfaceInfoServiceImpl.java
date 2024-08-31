@@ -28,6 +28,8 @@ import com.whut.webs.exception.ErrorCode;
 import com.whut.webs.exception.ThrowUtils;
 import lombok.AllArgsConstructor;
 import org.apache.dubbo.config.annotation.DubboService;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
 import java.net.URL;
@@ -56,6 +58,9 @@ public class InterfaceInfoServiceImpl extends ServiceImpl<InterfaceInfoMapper, I
 
 
     private final RequestClient requestClient;
+
+
+    private final RedissonClient redissonClient;
 
 
     @Override
@@ -159,7 +164,7 @@ public class InterfaceInfoServiceImpl extends ServiceImpl<InterfaceInfoMapper, I
     public Boolean checkExistenceById(String id) {
         // select from redis cache 
         final String cacheKey = INTERFACE_INFO_STATUS_KEY + id;
-        final String status = redisTemplate.opsForValue().get(cacheKey);
+        String status = redisTemplate.opsForValue().get(cacheKey);
 
         // it exists: check whether the interface info is online
         if (StrUtil.isNotBlank(status)) {
@@ -167,14 +172,37 @@ public class InterfaceInfoServiceImpl extends ServiceImpl<InterfaceInfoMapper, I
             return ONLINE.equals(status);
         }
 
-        // else: select from MySQL and cache it
-        final LambdaQueryWrapper<InterfaceInfo> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(InterfaceInfo::getId, id);
 
-        final String selectedStatus = this.baseMapper.selectStatus(Long.parseLong(id));
-        redisTemplate.opsForValue().set(cacheKey, selectedStatus, STATUS_TTL, TimeUnit.MINUTES);
+        final RLock lock = redissonClient.getLock(INTERFACE_INFO_STATUS_LOCK_KEY + id);
 
-        return ONLINE.equals(selectedStatus);
+        while (true) {
+            final boolean locked = lock.tryLock();
+            if (!locked) {
+                try {
+                    Thread.sleep(10L);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+
+                continue;
+            }
+
+            status = redisTemplate.opsForValue().get(cacheKey);
+            if (StrUtil.isNotBlank(status)) {
+                redisTemplate.expire(cacheKey, STATUS_TTL, TimeUnit.MINUTES);
+                return ONLINE.equals(status);
+            }
+
+
+            // else: select from MySQL and cache it
+            final LambdaQueryWrapper<InterfaceInfo> wrapper = new LambdaQueryWrapper<>();
+            wrapper.eq(InterfaceInfo::getId, id);
+
+            final String selectedStatus = this.baseMapper.selectStatus(Long.parseLong(id));
+            redisTemplate.opsForValue().set(cacheKey, selectedStatus, STATUS_TTL, TimeUnit.MINUTES);
+
+            return ONLINE.equals(selectedStatus);
+        }
     }
 
     @Override
@@ -240,10 +268,8 @@ public class InterfaceInfoServiceImpl extends ServiceImpl<InterfaceInfoMapper, I
     public void checkRole(User user, Long interfaceInfoId) {
         if (!UserRoleEnum.isAdmin(user)) {
             // whether it contains this
-            LambdaQueryWrapper<UserInterfaceInfo> wrapper = new LambdaQueryWrapper<>();
-            wrapper.eq(UserInterfaceInfo::getInterfaceInfoId, interfaceInfoId);
 
-            UserInterfaceInfo userInterfaceInfo = userInterfaceInfoService.getOne(wrapper);
+            final UserInterfaceInfo userInterfaceInfo = userInterfaceInfoService.getUserIdByInterfaceInfoId(interfaceInfoId);
 
             ThrowUtils.throwIf(userInterfaceInfo == null, ErrorCode.PARAMS_ERROR, "接口信息不存在");
             ThrowUtils.throwIf(user.getId().equals(userInterfaceInfo.getUserId()), ErrorCode.NO_AUTH_ERROR);

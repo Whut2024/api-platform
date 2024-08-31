@@ -15,6 +15,15 @@
     </resultMap>
 
     <select id="getLeftNum" resultType="java.lang.Integer">
-        select left_num from user_interface_info where is_delete = '0' and interface_info_id = #{interfaceInfoId}
+        select left_num
+        from user_interface_info
+        where is_delete = '0'
+          and interface_info_id = #{interfaceInfoId}
+    </select>
+    <select id="getUserIdByInterfaceInfoId" resultType="com.whut.apiplatform.model.entity.UserInterfaceInfo">
+        select user_id
+        from user_interface_info
+        where is_delete = '0'
+          and interface_info_id = #{interfaceInfoId}
     </select>
 </mapper>
