@@ -67,7 +67,7 @@
                 <version>${spring-boot.version}</version>
                 <configuration>
                     <mainClass>com.whut.test.api.demo.DemoApplication</mainClass>
-                    <skip>true</skip>
+                    <skip>false</skip>
                 </configuration>
                 <executions>
                     <execution>
