@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
+import java.util.*;
 
 /**
  * @author whut2024
@@ -20,15 +21,25 @@ public class TestController {
     public Object test(@PathVariable("id") Long id, HttpServletRequest request) throws Exception {
 
 
+        final int len = request.getIntHeader("content-length");
         final ServletInputStream inputStream = request.getInputStream();
-        final byte[] byteArray = new byte[4096];
+        final byte[] byteArray = new byte[len];
+
+        inputStream.read(byteArray);
+
+        final Enumeration<String> enumeration = request.getHeaderNames();
+        final Map<String, List<String>> headerMap = new HashMap<>();
+        while (enumeration.hasMoreElements()) {
+            final String key = enumeration.nextElement();
+
+            final List<String> headerList = headerMap.getOrDefault(key, new ArrayList<>());
+            headerList.add(request.getHeader(key));
+        }
 
 
-        final int len = inputStream.read(byteArray);
-
-
-        return request.getParameterMap().toString() + "\n" +
-                request.getHeaderNames().toString() + "\n" +
-                new String(byteArray, 0, len, StandardCharsets.UTF_8);
+        return id + "\n" +
+                request.getParameterMap() + "\n" +
+                headerMap + "\n" +
+                new String(byteArray, StandardCharsets.UTF_8);
     }
 }

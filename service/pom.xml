@@ -9,7 +9,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.whut.apipaltform</groupId>
+    <groupId>com.whut.apiplatform</groupId>
     <artifactId>service</artifactId>
 
     <dependencies>

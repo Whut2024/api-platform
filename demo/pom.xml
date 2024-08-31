@@ -32,7 +32,7 @@
 
 
         <dependency>
-            <groupId>com.whut.apipaltform</groupId>
+            <groupId>com.whut.apiplatform</groupId>
             <artifactId>api-spring-boot-starter</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
