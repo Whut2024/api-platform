@@ -112,7 +112,7 @@ public class InterfaceInfoController {
 
 
     @PostMapping("/offline")
-    public BaseResponse<Boolean> offlineInterfaceInfo(IdRequest idRequest) {
+    public BaseResponse<Boolean> offlineInterfaceInfo(@RequestBody IdRequest idRequest) {
         final Long id = idRequest.getId();
         ThrowUtils.throwIf(id == null || id <= 0, ErrorCode.PARAMS_ERROR);
 
