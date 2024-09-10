@@ -1,6 +1,7 @@
 package com.whut.apiplatform.core.config;
 
 import com.whut.apiplatform.core.interceptor.LoginInterceptor;
+import com.whut.apiplatform.core.interceptor.UserInterceptor;
 import lombok.AllArgsConstructor;
 import org.redisson.api.RedissonClient;
 import org.springframework.context.annotation.Configuration;
@@ -37,5 +38,7 @@ public class CustomMvcConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new LoginInterceptor(redisTemplate, redissonClient)).excludePathPatterns("/user/login");
+
+        registry.addInterceptor(new UserInterceptor()).excludePathPatterns("/user/login");
     }
 }
